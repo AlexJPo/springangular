@@ -1,3 +1,15 @@
-
 <div> Angular js first Page </div>
+
+<div class="section">
+    <h3>{{headingTitle}}</h3>
+    <div>
+        <ul type="square">
+            <li ng-repeat="item in Users">
+               name: {{item.name}}, age: {{item.age}}
+            </li>
+        </ul>
+    </div>
+</div>
+
+
 <a href="/">Back</a>
