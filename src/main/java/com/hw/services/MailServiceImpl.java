@@ -1,6 +1,7 @@
 package com.hw.services;
 
 import com.hw.interfaces.MailService;
+import com.hw.model.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,8 @@ public class MailServiceImpl implements MailService {
 
 
     @Override
-    public void sendEmail() {
-        MimeMessagePreparator preparator = getMessagePreparator();
+    public void sendEmail(Object emailObject) {
+        MimeMessagePreparator preparator = getMessagePreparator((Email)emailObject);
 
         try {
             mailSender.send(preparator);
@@ -30,11 +31,16 @@ public class MailServiceImpl implements MailService {
         }
     }
 
-    private MimeMessagePreparator getMessagePreparator() {
+    private MimeMessagePreparator getMessagePreparator(Email email) {
         MimeMessagePreparator preparator = mimeMessage -> {
             mimeMessage.setFrom(new InternetAddress("winewinishkin@yandex.ru"));
-            mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress("vbbaryshnikov@gmail.com"));
-            mimeMessage.setText("Тестовоетекствовое письмо, которое может положить начало разработке сервера на spring оп винишку - е хо хо и бутылка рома :)");
+            if (email.getTo().isEmpty()) {
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress("vbbaryshnikov@gmail.com"));
+            } else {
+                mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(email.getTo()));
+            }
+
+            mimeMessage.setText(email.getBody());
             mimeMessage.setSubject("Wine");
         };
         return preparator;

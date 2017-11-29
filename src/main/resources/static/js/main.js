@@ -29,10 +29,16 @@ app.controller('usersController', function($scope, $http) {
 });
 
 app.controller('mailController', function($scope, $http) {
+    $scope.mail = {to:'', body:''};
+    $scope.result = '';
+
     $scope.sendMail = function() {
-        $http.get("second/sendMail").then(function (response) {
-            if (response.status == 200) {
-                console.log('Email was send');
+        var data = JSON.stringify({to: $scope.mail.to, body: $scope.mail.body});
+        console.log(data);
+
+        $http.post("second/sendMail", data).then(function (response) {
+            if (response.status) {
+                $scope.result = response.message;
             }
         });
     };

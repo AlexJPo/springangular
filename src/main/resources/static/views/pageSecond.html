@@ -1,6 +1,19 @@
 
 <div> Angular js second page </div>
 
-<button ng-click="sendMail()">Send email</button>
+
+<div ng-show="result != ''">
+    {{result}}
+</div>
+
+<div ng-show="result == ''">
+    <label>Email:
+        <input type="text" ng-model="mail.to">
+    </label>
+    <label>Message:</label>
+    <textarea ng-model="mail.body"></textarea>
+    <hr>
+    <button ng-click="sendMail()">Send email</button>
+</div>
 </bt>
 <a href="/">Back</a>

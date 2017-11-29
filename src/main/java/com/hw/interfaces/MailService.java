@@ -1,5 +1,5 @@
 package com.hw.interfaces;
 
 public interface MailService {
-    void sendEmail();
+    void sendEmail(final Object object);
 }
