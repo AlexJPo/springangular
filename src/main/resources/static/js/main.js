@@ -11,7 +11,8 @@ app.config(function($routeProvider, $locationProvider) {
             controller: 'usersController'
         })
         .when("/second", {
-            templateUrl : "views/pageSecond.html"
+            templateUrl : "views/pageSecond.html",
+            controller: 'mailController'
         }).otherwise(
             { redirectTo: '/' }
         );
@@ -25,4 +26,14 @@ app.controller('usersController', function($scope, $http) {
             $scope.Users = response.data;
         }
     });
+});
+
+app.controller('mailController', function($scope, $http) {
+    $scope.sendMail = function() {
+        $http.get("second/sendMail").then(function (response) {
+            if (response.status == 200) {
+                console.log('Email was send');
+            }
+        });
+    };
 });
